@@ -2,23 +2,36 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    //
+    use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'student_no',
+        'gender',
+        'dob',
+        'address',
+    ];
 
     public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    {
+        return $this->belongsTo(User::class);
+    }
 
-public function batches()
+    public function batches()
+    {
+        return $this->belongsToMany(Batch::class, 'batch_students');
+    }
+
+    public function attendances()
 {
-    return $this->belongsToMany(
-        Batch::class,
-        'batch_students'
+    return $this->hasMany(
+        Attendance::class
     );
 }
+
 }
