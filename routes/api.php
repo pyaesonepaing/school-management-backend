@@ -84,6 +84,10 @@ Route::middleware(['auth:sanctum', 'role:super_admin'])
             'blogs',
             BlogController::class
         );
+        Route::delete(
+            '/students/bulk-delete',
+            [StudentController::class, 'bulkDelete']
+        );
     });
 
 

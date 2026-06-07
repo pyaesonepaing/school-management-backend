@@ -13,10 +13,11 @@ class StudentController extends Controller
 {
     public function index()
     {
-        return ApiResponse::success(
-            StudentResource::collection(
-                Student::with('user','batches')->get()
-            )
+        return response()->json(
+            Student::with(
+                'user',
+                'batches'
+            )->get()
         );
     }
 
@@ -33,9 +34,24 @@ class StudentController extends Controller
             'status' => $data['status'] ?? true,
         ]);
 
+        $lastStudent = Student::latest('id')->first();
+
+        $nextNumber = $lastStudent
+            ? $lastStudent->id + 1
+            : 1;
+
+        $studentNo =
+            'HZA-' .
+            str_pad(
+                $nextNumber,
+                6,
+                '0',
+                STR_PAD_LEFT
+            );
+
         $student = Student::create([
             'user_id' => $user->id,
-            'student_no' => $data['student_no'],
+            'student_no' => $studentNo,
             'gender' => $data['gender'] ?? null,
             'dob' => $data['dob'] ?? null,
             'address' => $data['address'] ?? null,
@@ -84,4 +100,25 @@ class StudentController extends Controller
         $student->user->delete(); // cascades to delete student
         return response()->json(['message' => 'Student deleted']);
     }
+
+    public function bulkDelete(Request $request)
+{
+    $request->validate([
+        'student_ids' => 'required|array',
+        'student_ids.*' => 'exists:students,id',
+    ]);
+
+    $students = Student::whereIn(
+        'id',
+        $request->student_ids
+    )->get();
+
+    foreach ($students as $student) {
+        $student->user->delete();
+    }
+
+    return response()->json([
+        'message' => 'Students deleted successfully'
+    ]);
+}
 }

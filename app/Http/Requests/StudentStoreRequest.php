@@ -18,7 +18,6 @@ class StudentStoreRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
             'phone' => 'nullable|string|max:50',
-            'student_no' => 'required|string|unique:students,student_no',
             'gender' => 'nullable|in:male,female',
             'dob' => 'nullable|date',
             'address' => 'nullable|string|max:1000',
