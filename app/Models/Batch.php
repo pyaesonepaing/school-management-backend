@@ -12,7 +12,6 @@ class Batch extends Model
     protected $fillable = [
         'level_id',
         'campus_id',
-        'room_id',
         'batch_name',
         'batch_code',
         'max_students',
@@ -29,11 +28,6 @@ class Batch extends Model
     public function campus()
     {
         return $this->belongsTo(Campus::class);
-    }
-
-    public function room()
-    {
-        return $this->belongsTo(Room::class);
     }
 
     public function students()

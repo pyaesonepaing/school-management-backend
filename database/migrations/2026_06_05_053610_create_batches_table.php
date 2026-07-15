@@ -22,10 +22,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->foreignId('room_id')
-                ->nullable()
-                ->constrained()
-                ->nullOnDelete();
+
 
             $table->string('batch_name');
 

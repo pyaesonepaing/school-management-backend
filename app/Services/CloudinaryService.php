@@ -8,7 +8,7 @@ class CloudinaryService
 {
     public function upload($file, $folder)
     {
-        $uploaded = Cloudinary::upload(
+        $uploaded = cloudinary()->uploadApi()->upload(
             $file->getRealPath(),
             [
                 'folder' => $folder
@@ -16,8 +16,8 @@ class CloudinaryService
         );
 
         return [
-            'public_id' => $uploaded->getPublicId(),
-            'url' => $uploaded->getSecurePath(),
+            'public_id' => $uploaded['public_id'],
+            'url' => $uploaded['secure_url'],
         ];
     }
 }

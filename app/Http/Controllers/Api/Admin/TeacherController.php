@@ -29,9 +29,13 @@ class TeacherController extends Controller
             'status' => $data['status'] ?? true,
         ]);
 
+        $lastTeacher = Teacher::latest('id')->first();
+        $nextNumber = $lastTeacher ? $lastTeacher->id + 1 : 1;
+        $teacherNo = 'HZT-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+
         $teacher = Teacher::create([
             'user_id' => $user->id,
-            'teacher_no' => $data['teacher_no'],
+            'teacher_no' => $teacherNo,
             'qualification' => $data['qualification'] ?? null,
             'joining_date' => $data['joining_date'] ?? null,
             'bio' => $data['bio'] ?? null,
@@ -58,7 +62,6 @@ class TeacherController extends Controller
         ]);
 
         $teacher->update([
-            'teacher_no' => $data['teacher_no'],
             'qualification' => $data['qualification'] ?? $teacher->qualification,
             'joining_date' => $data['joining_date'] ?? $teacher->joining_date,
             'bio' => $data['bio'] ?? $teacher->bio,

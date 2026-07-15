@@ -18,7 +18,6 @@ class BatchUpdateRequest extends FormRequest
         return [
             'level_id' => 'required|exists:levels,id',
             'campus_id' => 'required|exists:campuses,id',
-            'room_id' => 'nullable|exists:rooms,id',
             'batch_name' => 'required|string|max:255',
             'batch_code' => "required|string|max:50|unique:batches,batch_code,$batchId",
             'max_students' => 'nullable|integer|min:1',

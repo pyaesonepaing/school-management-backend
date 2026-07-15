@@ -12,16 +12,12 @@ class Schedule extends Model
     protected $fillable = [
     'batch_id',
     'teacher_id',
-    'campus_id',
     'room_id',
 
     'day_of_week',
 
     'start_time',
     'end_time',
-
-    'start_date',
-    'end_date',
 
     'status',
 ];
@@ -34,11 +30,6 @@ public function batch()
 public function teacher()
 {
     return $this->belongsTo(Teacher::class);
-}
-
-public function campus()
-{
-    return $this->belongsTo(Campus::class);
 }
 
 public function room()

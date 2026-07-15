@@ -16,7 +16,8 @@ class StudentController extends Controller
         return response()->json(
             Student::with(
                 'user',
-                'batches'
+                'batches.level',
+                'batches.campus'
             )->get()
         );
     }
@@ -61,12 +62,12 @@ class StudentController extends Controller
             $student->batches()->sync($data['batch_ids']);
         }
 
-        return response()->json($student->load('user', 'batches'), 201);
+        return response()->json($student->load('user', 'batches.level', 'batches.campus'), 201);
     }
 
     public function show(Student $student)
     {
-        return $student->load('user', 'batches');
+        return $student->load('user', 'batches.level', 'batches.campus');
     }
 
     public function update(StudentUpdateRequest $request, Student $student)
@@ -92,7 +93,7 @@ class StudentController extends Controller
             $student->batches()->sync($data['batch_ids']);
         }
 
-        return $student->load('user', 'batches');
+        return $student->load('user', 'batches.level', 'batches.campus');
     }
 
     public function destroy(Student $student)
@@ -121,4 +122,12 @@ class StudentController extends Controller
         'message' => 'Students deleted successfully'
     ]);
 }
+
+    public function resetPassword(Student $student)
+    {
+        $student->user->update([
+            'password' => Hash::make('Student123!@#')
+        ]);
+        return response()->json(['message' => 'Password reset to Student123!@#']);
+    }
 }

@@ -12,7 +12,7 @@ class BatchController extends Controller
     public function index()
     {
         // Return batches with related level, campus, and room
-        return response()->json(Batch::with(['level', 'campus', 'room', 'students'])->get());
+        return response()->json(Batch::with(['level', 'campus', 'students'])->get());
     }
 
     public function store(BatchStoreRequest $request)
@@ -23,7 +23,7 @@ class BatchController extends Controller
 
     public function show(Batch $batch)
     {
-        return response()->json($batch->load(['level', 'campus', 'room', 'students']));
+        return response()->json($batch->load(['level', 'campus', 'students']));
     }
 
     public function update(BatchUpdateRequest $request, Batch $batch)

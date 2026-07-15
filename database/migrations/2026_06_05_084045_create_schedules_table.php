@@ -23,10 +23,6 @@ return new class extends Migration
             ->constrained()
             ->cascadeOnDelete();
 
-        $table->foreignId('campus_id')
-            ->constrained()
-            ->cascadeOnDelete();
-
         $table->foreignId('room_id')
             ->nullable()
             ->constrained()
@@ -45,10 +41,6 @@ return new class extends Migration
         $table->time('start_time');
 
         $table->time('end_time');
-
-        $table->date('start_date');
-
-        $table->date('end_date');
 
         $table->boolean('status')->default(true);
 
