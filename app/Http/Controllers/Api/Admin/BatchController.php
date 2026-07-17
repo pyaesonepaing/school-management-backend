@@ -9,10 +9,17 @@ use App\Models\Batch;
 
 class BatchController extends Controller
 {
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        // Return batches with related level, campus, and room
-        return response()->json(Batch::with(['level', 'campus', 'students'])->get());
+        $query = Batch::with(['level', 'campus', 'students']);
+        
+        if ($request->has('room_id')) {
+            $query->whereHas('schedules', function ($q) use ($request) {
+                $q->where('room_id', $request->room_id);
+            });
+        }
+        
+        return response()->json($query->get());
     }
 
     public function store(BatchStoreRequest $request)

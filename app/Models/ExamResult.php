@@ -12,6 +12,10 @@ class ExamResult extends Model
     protected $fillable = [
         'exam_id',
         'student_id',
+        'listening_marks',
+        'reading_marks',
+        'writing_marks',
+        'speaking_marks',
         'marks_obtained',
         'is_graded',
         'remark',

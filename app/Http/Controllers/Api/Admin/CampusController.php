@@ -24,7 +24,24 @@ class CampusController extends Controller
 
     public function show(Campus $campus)
     {
-        return response()->json($campus);
+        $roomsCount = $campus->rooms()->count();
+        
+        $studentsCount = \App\Models\Student::whereHas('batches', function ($query) use ($campus) {
+            $query->where('campus_id', $campus->id);
+        })->count();
+
+        $teachersCount = \App\Models\Teacher::whereHas('schedules.batch', function ($query) use ($campus) {
+            $query->where('campus_id', $campus->id);
+        })->count();
+
+        return response()->json([
+            'campus' => $campus,
+            'stats' => [
+                'rooms_count' => $roomsCount,
+                'students_count' => $studentsCount,
+                'teachers_count' => $teachersCount,
+            ]
+        ]);
     }
 
     public function update(CampusUpdateRequest $request, Campus $campus)

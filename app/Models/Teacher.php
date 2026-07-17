@@ -12,6 +12,7 @@ class Teacher extends Model
 
      protected $fillable = [
         'user_id',
+        'campus_id',
         'teacher_no',
         'qualification',
         'joining_date',
@@ -23,6 +24,12 @@ class Teacher extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function campus()
+    {
+        return $this->belongsTo(Campus::class);
+    }
+
     public function batches()
     {
         return $this->hasMany(Batch::class, 'teacher_id');

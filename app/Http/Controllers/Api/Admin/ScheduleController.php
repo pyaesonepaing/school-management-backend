@@ -15,7 +15,7 @@ class ScheduleController extends Controller
             Schedule::with([
                 'batch',
                 'teacher.user',
-                'campus',
+                'room.campus',
                 'room'
             ])->get()
         );
@@ -73,7 +73,7 @@ class ScheduleController extends Controller
             $schedule->load([
                 'batch',
                 'teacher.user',
-                'campus',
+                'room.campus',
                 'room'
             ]),
             201
@@ -86,7 +86,7 @@ class ScheduleController extends Controller
             $schedule->load([
                 'batch',
                 'teacher.user',
-                'campus',
+                'room.campus',
                 'room'
             ])
         );
@@ -149,7 +149,7 @@ class ScheduleController extends Controller
             $schedule->load([
                 'batch',
                 'teacher.user',
-                'campus',
+                'room.campus',
                 'room'
             ])
         );
